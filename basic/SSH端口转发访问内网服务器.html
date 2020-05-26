@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SSH端口转发访问内网服务器</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    
+    <meta name="description" content="">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.94f21477.js" as="script"><link rel="preload" href="/assets/js/2.6243906d.js" as="script"><link rel="preload" href="/assets/js/7.273ddb4e.js" as="script"><link rel="prefetch" href="/assets/js/10.23d9b4c8.js"><link rel="prefetch" href="/assets/js/3.f3f6d0a6.js"><link rel="prefetch" href="/assets/js/4.2b7fc900.js"><link rel="prefetch" href="/assets/js/5.5ed10c29.js"><link rel="prefetch" href="/assets/js/6.8663e97d.js"><link rel="prefetch" href="/assets/js/8.b122b800.js"><link rel="prefetch" href="/assets/js/9.5563d343.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="https://www.dmesg.top:456" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  下载站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.wolfbite.top" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="https://www.dmesg.top:456" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  下载站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.wolfbite.top" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>运维小本</span> <!----></p> <!----></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>基础技术</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/basic/CentOS7编译内核.html" class="sidebar-link">CentOS7内核升级</a></li><li><a href="/basic/SSH端口转发访问内网服务器.html" class="active sidebar-link">SSH端口转发访问内网服务器</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>容器</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/container/Dockerfile中RUN-CMD以及ENTRYPOINT的区别.html" class="sidebar-link">Dockerfile中RUN CMD以及ENTRYPOINT的区别</a></li><li><a href="/container/Docker三剑客之Docker-Machine.html" class="sidebar-link">Docker三剑客之Docker-Machine</a></li><li><a href="/container/Docker:创建带有自定义库的Mysql镜像.html" class="sidebar-link">Docker：创建带有自定义库的Mysql镜像</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>公司内网有台8核8G的服务器可以用来玩。虽然配置不是太高，但是相对于自己1核2G的学生机来说已经不知道强到哪里了。但由于是内网的缘故只能在公司内访问，虽然通过远程桌面也能使用，但是这样未免太low了。于是想到用ssh来进行端口转发，在家也能访问内网服务器。</p> <h3 id="条件"><a href="#条件" class="header-anchor">#</a> 条件</h3> <p><font color="#FF0000" size="5" face="黑体"><strong>内网服务器必须能连外网</strong></font></p> <p>服务器信息如下：</p> <table><thead><tr><th style="text-align:center;">服务器名称</th> <th style="text-align:center;">服务器ip</th> <th style="text-align:center;">ssh端口</th> <th style="text-align:center;">服务器配置</th></tr></thead> <tbody><tr><td style="text-align:center;">公网服务器</td> <td style="text-align:center;">122.34.122.32</td> <td style="text-align:center;">54374</td> <td style="text-align:center;">1核2G</td></tr> <tr><td style="text-align:center;">内网服务器</td> <td style="text-align:center;">172.18.10.23</td> <td style="text-align:center;">22</td> <td style="text-align:center;">8核8G</td></tr></tbody></table> <h3 id="步骤"><a href="#步骤" class="header-anchor">#</a> 步骤</h3> <p>1.在内网服务器上执行：</p> <div class="language- extra-class"><pre class="language-text"><code>ssh -N -f -R [122.34.122.32:]10022:172.18.10.23:22 root@122.34.122.32 -p54374
+</code></pre></div><p>参数解释：</p> <p><strong>-N</strong>:不执行远程命令，如果ssh仅仅是用来转发端口很有用。</p> <blockquote><p>Do not execute a remote command.  This is useful for just forwarding ports.</p></blockquote> <p><strong>-f</strong>:将本条命令放到后台执行，防止内网服务器ssh窗口关闭导致无法连接到内网服务器</p> <p><strong>-R</strong>:设置转发规则，本条规则是把本地22端口的请求转发到122.34.122.32的10022端口，形成一条通路。</p> <p><strong>-p 54374</strong>:指定公网服务器的ssh端口用于登录</p> <p>2.登录公网服务器，查询端口发现端口已经监听：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs ~]# ss -tnl | grep :10022
+LISTEN     0      128          *:10022                 *:*                  
+LISTEN     0      128       [::]:10022                 [::]:* 
+</code></pre></div><p>3.在122.34.122.32连接10022端口,输入内网服务器的root密码登录：</p> <div class="language- extra-class"><pre class="language-text"><code>ssh -p10022 122.34.122.32
+</code></pre></div><p>命令执行完成即已登录到内网服务器</p> <div class="language- extra-class"><pre class="language-text"><code>top - 23:14:46 up 22 days,  5:26,  2 users,  load average: 0.00, 0.01, 0.05
+Tasks: 280 total,   2 running, 278 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu4  :  0.0 us,  2.6 sy,  0.0 ni, 97.4 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu5  :  0.0 us,  2.7 sy,  0.0 ni, 97.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu6  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu7  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  8008440 total,  5914008 free,   730108 used,  1364324 buff/cache
+KiB Swap:        0 total,        0 free,        0 used.  6954304 avail Mem 
+</code></pre></div><p>真香！</p> <h3 id="延伸"><a href="#延伸" class="header-anchor">#</a> 延伸</h3> <p>如果内网的服务器上有mysql同样可以使用端口转发访问内网的mysql</p> <div class="language- extra-class"><pre class="language-text"><code>ssh -N -f -R 33060:172.18.10.23:3306 root@122.34.122.32 -p54374
+
+mysql -h127.0.0.1 -P33060 -uroot -p 
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/basic/CentOS7编译内核.html" class="prev">
+        CentOS7内核升级
+      </a></span> <span class="next"><a href="/container/Dockerfile中RUN-CMD以及ENTRYPOINT的区别.html">
+        Dockerfile中RUN CMD以及ENTRYPOINT的区别
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.94f21477.js" defer></script><script src="/assets/js/2.6243906d.js" defer></script><script src="/assets/js/7.273ddb4e.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dockerfile中RUN CMD以及ENTRYPOINT的区别</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    
+    <meta name="description" content="">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.94f21477.js" as="script"><link rel="preload" href="/assets/js/2.6243906d.js" as="script"><link rel="preload" href="/assets/js/9.5563d343.js" as="script"><link rel="prefetch" href="/assets/js/10.23d9b4c8.js"><link rel="prefetch" href="/assets/js/3.f3f6d0a6.js"><link rel="prefetch" href="/assets/js/4.2b7fc900.js"><link rel="prefetch" href="/assets/js/5.5ed10c29.js"><link rel="prefetch" href="/assets/js/6.8663e97d.js"><link rel="prefetch" href="/assets/js/7.273ddb4e.js"><link rel="prefetch" href="/assets/js/8.b122b800.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="https://www.dmesg.top:456" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  下载站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.wolfbite.top" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="https://www.dmesg.top:456" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  下载站
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://www.wolfbite.top" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  个人博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>运维小本</span> <!----></p> <!----></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>基础技术</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/basic/CentOS7编译内核.html" class="sidebar-link">CentOS7内核升级</a></li><li><a href="/basic/SSH端口转发访问内网服务器.html" class="sidebar-link">SSH端口转发访问内网服务器</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>容器</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/container/Dockerfile中RUN-CMD以及ENTRYPOINT的区别.html" class="active sidebar-link">Dockerfile中RUN CMD以及ENTRYPOINT的区别</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/container/Docker三剑客之Docker-Machine.html" class="sidebar-link">Docker三剑客之Docker-Machine</a></li><li><a href="/container/Docker:创建带有自定义库的Mysql镜像.html" class="sidebar-link">Docker：创建带有自定义库的Mysql镜像</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>Dockerfile中的RUN，CMD，ENTRTPOINT三个指令均可以用来指明容器中所运行的指令，但这三者存在的细微的区别。
+</p> <p>简单来说：</p> <h3 id="run"><a href="#run" class="header-anchor">#</a> RUN</h3> <p>RUN指令一般用于在容器内安装软件包或者是执行其他的命令，如</p> <div class="language- extra-class"><pre class="language-text"><code>RUN yum install -y telnet
+RUN touch web.xml
+</code></pre></div><h3 id="cmd"><a href="#cmd" class="header-anchor">#</a> CMD</h3> <p>CMD指令主要用来指明生成的Docker镜像在启动时的命令及参数，这个指令可以被docker run后面的命令所取代，比如下面这个Dockerfile文件</p> <div class="language- extra-class"><pre class="language-text"><code>FROM busybox
+CMD echo &quot;hello world&quot;
+</code></pre></div><p>CMD指明了Docker镜像在运行时的输出一个&quot;hello world&quot;</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# docker build -t test .
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM busybox
+ ---&gt; 83aa35aa1c79
+Step 2/2 : CMD echo &quot;hello world&quot;
+ ---&gt; Running in a1a4d74137d2
+Removing intermediate container a1a4d74137d2
+ ---&gt; 651b45b58fe9
+Successfully built 651b45b58fe9
+Successfully tagged test:latest
+[root@bochs Docker]# docker run -it test
+hello world
+</code></pre></div><p>但是如果在docker run后添加其他指令。那么CMD将直接被替换</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# docker run -it test ls
+bin   dev   etc   home  proc  root  sys   tmp   usr   var
+</code></pre></div><h3 id="entrypoint"><a href="#entrypoint" class="header-anchor">#</a> ENTRYPOINT</h3> <p>ENTRYPOINT与CMD类似，区别在于ENTRYPOINT<strong>一定</strong>会被执行。如果一个Dockerfile中同时存在ENTRYPOINT和</p> <p>CMD，CMD中的参数会被当做额外参数传给ENTRYPOINT。</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# cat Dockerfile 
+FROM busybox
+ENTRYPOINT [&quot;/bin/echo&quot;,&quot;hello&quot;]
+CMD [&quot;world&quot;]
+</code></pre></div><p>通过docker run 来运行，CMD变成了ENTRYPOINT的参数：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# docker run -it test2 
+hello world
+</code></pre></div><p>但是如果指明docker run 的参数china，那么输出就会变为：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# docker run -it test2 china
+hello china
+</code></pre></div><p>原本CMD中带的参数world被docker run中的china所替换，但ENTRYPOINT自带的hello依然正常输出</p> <h3 id="shell与exec格式"><a href="#shell与exec格式" class="header-anchor">#</a> Shell与Exec格式</h3> <p>CMD，RUN，ENTRYPOINT可以用两种格式来传递命令和参数，Shell一般表示为指令+命令，如:</p> <div class="language- extra-class"><pre class="language-text"><code>RUN yum install -y telnet
+CMD echo &quot;hello world&quot;
+</code></pre></div><p>第一个大写的单词是Dockerfile的指令。后面跟的就是命令，可以拿到shell中单独执行</p> <p>Exec格式可以表示为:指令+[&quot;命令&quot;,&quot;命令参数1&quot;,&quot;命令参数2&quot;,...],比如:</p> <div class="language- extra-class"><pre class="language-text"><code>RUN [&quot;yum&quot;,&quot;install&quot;,&quot;telnet&quot;]
+ENTRYPOINT [&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;echo hello world&quot;]
+</code></pre></div><p>对于这两种格式来说，CMD和ENTRYPOINT最好使用Exec格式，命令和参数分开，层次性较强，而RUN则都可以。</p> <p><strong>注意</strong>：ENTRYPOINT的Shell格式和Exec格式差异很大。比如下面这个Shell格式的ENTRYPOINT</p> <div class="language- extra-class"><pre class="language-text"><code>FROM busybox
+ENTRYPOINT echo &quot;hello&quot;
+CMD &quot;world&quot;
+</code></pre></div><p>在运行所生成的容器时，仅会输出hello，而CMD带的&quot;world&quot;会被<s>忽略</s>。同样的docker run带的参数也同样会被<s>忽略</s></p> <div class="language- extra-class"><pre class="language-text"><code>[root@bochs Docker]# docker run -it test
+hello
+[root@bochs Docker]# docker run -it test china
+hello
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/basic/SSH端口转发访问内网服务器.html" class="prev">
+        SSH端口转发访问内网服务器
+      </a></span> <span class="next"><a href="/container/Docker三剑客之Docker-Machine.html">
+        Docker三剑客之Docker-Machine
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.94f21477.js" defer></script><script src="/assets/js/2.6243906d.js" defer></script><script src="/assets/js/9.5563d343.js" defer></script>
+  </body>
+</html>
